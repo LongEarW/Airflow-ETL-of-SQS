@@ -26,7 +26,7 @@ docker compose up -d
 docker compose ps
 ```
 3. Move the `sqs_dag.py` in `/dags`;
-4. In the Airflow dashboard (http://localhost:8080/), create the PostgreSQL connection at `Admin>Connections>ADD+`: 
+4. In the Airflow dashboard (http://localhost:8080/, username: airflow, password: airflow), create the PostgreSQL connection at `Admin>Connections>ADD+`: 
   - Connection Id: postgres_sqs
   - Connection Type: Postgres
   - Host: postgres_sqs
