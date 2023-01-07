@@ -31,9 +31,10 @@ docker compose ps
   - Connection Type: Postgres
   - Host: postgres_sqs
   - Login: postgres
+  - Password: postgres
   - Port: 5432  
   <img src="./CreateConnection.png" width="200">
-5. Turn on the toggle of DAG: `sqs_msg_etl`. Within 5 minutes, a DAG runs will complete. 
+5. Turn on the toggle of DAG: `sqs_msg_etl`. Refresh and a DAG runs will start and complete soon. 
    <img src="./TurnOnToggle.png" width="200">
 6. Check the PostgresSQL if the data inserted:
 
