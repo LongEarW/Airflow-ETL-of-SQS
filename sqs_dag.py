@@ -1,3 +1,16 @@
+""
+This file creates the DAG for the ETL workflow, and will be parsed by Airflow
+Put this file under directory /dags
+
+Supports basic configuration:
+    FETCH_TOKEN  - encyption token for PII
+    MAX_VERSION_BIT  - maxium sub version length
+    START_DATE - for workflow schedule inital date
+    DAG_SCHEDULE  - for workflow frequency
+    
+@author Wenqing Wei
+"""
+
 from airflow.decorators import dag, task
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
