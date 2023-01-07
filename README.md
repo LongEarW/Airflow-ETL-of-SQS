@@ -81,4 +81,7 @@ In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` f
     ```
   - **Q5. What are the assumptions you made?**
   
-    Assumed the version format follows sematic versioning.
+    Assumed the LocalStack service is healthy, and the message contains necessary fields with specific name;
+    Assumed the each message info size is limited, hence it will be suitable to transit between Airflow tasks.
+    Assumed the version format follows sematic versioning, hence it will fits the implemented conversion method.
+    
