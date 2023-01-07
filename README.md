@@ -57,7 +57,8 @@ In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` f
 
 ## Answer to Questions
   - **Q1. How would you deploy this application in production?**
-  Launch Airflow workers on multi-node cluster (Kubernetes cluster) to surpport scale. Also, switch interaction with LocalStack to AWS.
+ 
+    Launch Airflow workers on multi-node cluster (Kubernetes cluster) to surpport scale. Also, switch interaction with LocalStack to AWS.
 <br/>
 
   - **Q2. What other components would you want to add to make this production ready?**
@@ -67,11 +68,12 @@ In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` f
 <br/>
 
   - **Q3. How can this application scale with a growing dataset.**
-  If the SQS has high throughput, ETL may increase workflow frequency, limit the number of message for each consumption, increase number of work nodes and transfer the database from Postgres to distributed cluster (Hadoop, Redis).
+    If the SQS has high throughput, ETL may increase workflow frequency, limit the number of message for each consumption, increase number of work nodes and transfer the database from Postgres to distributed cluster (Hadoop, Redis).
 <br/>
 
   - **Q4. How can PII be recovered later on?**
-  Given that the ETL encrypt the PII through ECB and base64, the user can recover the PII through reversed process:
+ 
+    Given that the ETL encrypt the PII through ECB and base64, the user can recover the PII through reversed process:
     ```
     def decypt_text(en_text):
         aes = AES.new(FETCH_TOKEN.encode("utf8"), AES.MODE_ECB)
@@ -80,4 +82,5 @@ In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` f
         return decrypted_text
     ```
   - **Q5. What are the assumptions you made?**
-  Assumed the version format follows sematic versioning.
+  
+    Assumed the version format follows sematic versioning.
