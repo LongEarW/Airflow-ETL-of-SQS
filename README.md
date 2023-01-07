@@ -21,7 +21,7 @@ This ETL requires the following modules:
 ```
 docker compose up -d
 ```
-2. Make sure every service is healthy by checking:
+2. Before move to next step, make sure every service is healthy by checking:
 ```
 docker compose ps
 ```
@@ -34,13 +34,13 @@ docker compose ps
   - Password: postgres
   - Port: 5432  
   <img src="./CreateConnection.png" width="200">
-5. Turn on the toggle of DAG: `sqs_msg_etl`. Refresh and a DAG runs will start and complete soon. 
+5. Turn on the toggle of DAG: `sqs_msg_etl`. Refresh and a DAG runs will start and complete soon. (The sqs_msg_etl DAG instance takes up to 5 minutes to show in dashboard)
    <img src="./TurnOnToggle.png" width="200">
-6. Check the PostgresSQL if the data inserted:
+6. You can check the PostgresSQL if the data inserted:
 
   - enter the container and the postgres CLI
     ```
-    docker exec -it airflow-postgres_sqs-1 /bin/bash
+    docker exec -it sqs_airflow_etl-postgres_sqs-1 /bin/bash
     psql -Upostgres
     ```
   - In postgres CLI, connect to database `postgres` and query on the table
