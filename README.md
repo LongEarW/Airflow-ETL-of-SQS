@@ -59,17 +59,15 @@ In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` f
   - **Q1. How would you deploy this application in production?**
  
     Launch Airflow workers on multi-node cluster (Kubernetes cluster) to surpport scale. Also, switch interaction with LocalStack to AWS.
-<br/>
 
   - **Q2. What other components would you want to add to make this production ready?**
     1. Additional handling for extracting no message from SQS (current implementation can handle the case, but not elegantly).
     2. Rebuilt the Airflow Worker image (current image doesn't include all the requires modules, they are installed at docker compose step, which is not suitable for production enviroment).
     3. Add alarm notification for task failures.
-<br/>
 
   - **Q3. How can this application scale with a growing dataset.**
+ 
     If the SQS has high throughput, ETL may increase workflow frequency, limit the number of message for each consumption, increase number of work nodes and transfer the database from Postgres to distributed cluster (Hadoop, Redis).
-<br/>
 
   - **Q4. How can PII be recovered later on?**
  
