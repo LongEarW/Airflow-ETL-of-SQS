@@ -25,45 +25,51 @@ docker compose up -d
 ```
 docker compose ps
 ```
-1. Move the `sqs_dag.py` in `/dags`;
-2. In the Airflow dashboard (http://localhost:8080/), create the PostgreSQL connection at `Admin>Connections>ADD+`: 
+3. Move the `sqs_dag.py` in `/dags`;
+4. In the Airflow dashboard (http://localhost:8080/), create the PostgreSQL connection at `Admin>Connections>ADD+`: 
   - Connection Id: postgres_sqs
   - Connection Type: Postgres
   - Host: postgres_sqs
   - Login: postgres
   - Port: 5432  
   <img src="./CreateConnection.png" width="200">
-1. Turn on the toggle of DAG: `sqs_msg_etl`. Within 5 minutes, a DAG runs will complete. 
-<img src="./TurnOnToggle.png" width="200">
-1. Check the PostgresSQL if the data inserted:
-- enter the container and the postgres CLI
+5. Turn on the toggle of DAG: `sqs_msg_etl`. Within 5 minutes, a DAG runs will complete. 
+   <img src="./TurnOnToggle.png" width="200">
+6. Check the PostgresSQL if the data inserted:
+
+  - enter the container and the postgres CLI
     ```
     docker exec -it airflow-postgres_sqs-1 /bin/bash
     psql -Upostgres
     ```
-- In postgres CLI, connect to database `postgres` and query on the table
-  ```
-  \c postgres
-  SELECT * FROM user_logins LIMIT 10;
-  ```
+  - In postgres CLI, connect to database `postgres` and query on the table
+    ```
+    \c postgres
+    SELECT * FROM user_logins LIMIT 10;
+    ```
   ![DatabaseResult](./DatabaseResult.png)
+
 
 ## Maintenance
 In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` for overview of runs' status, and check log for detialed process.
+
 <img src="./Grid.png" width="200">
 
 ## Answer to Questions
   - **Q1. How would you deploy this application in production?**
   Launch Airflow workers on multi-node cluster (Kubernetes cluster) to surpport scale. Also, switch interaction with LocalStack to AWS.
 <br/>
+
   - **Q2. What other components would you want to add to make this production ready?**
     1. Additional handling for extracting no message from SQS (current implementation can handle the case, but not elegantly).
     2. Rebuilt the Airflow Worker image (current image doesn't include all the requires modules, they are installed at docker compose step, which is not suitable for production enviroment).
     3. Add alarm notification for task failures.
 <br/>
+
   - **Q3. How can this application scale with a growing dataset.**
   If the SQS has high throughput, ETL may increase workflow frequency, limit the number of message for each consumption, increase number of work nodes and transfer the database from Postgres to distributed cluster (Hadoop, Redis).
 <br/>
+
   - **Q4. How can PII be recovered later on?**
   Given that the ETL encrypt the PII through ECB and base64, the user can recover the PII through reversed process:
     ```
