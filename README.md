@@ -1,9 +1,9 @@
 # ETL off a SQS Queue
 The ETL off a SQS Queue implements the whole ETL process through Airflow. And it will lauch a new run every 5 minutes.
 The ETL consists 3 steps: 
-**Data Extraction**: use BashOperator to extract data through awscli-local from SQS
-**Data Cleaning**: flattern nested Json data, convert to Pandas dataframe; mark PII and convert app version to integer; save the transformed data into csv file.
-**Data Storage**: insert the csv file into Postgres.
+  - **Data Extraction**: use BashOperator to extract data through awscli-local from SQS
+  - **Data Cleaning**: flattern nested Json data, convert to Pandas dataframe; mark PII and convert app version to integer; save the transformed data into csv file.
+  - **Data Storage**: insert the csv file into Postgres.
 
 
 ## Table of contents
@@ -81,7 +81,7 @@ In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` f
     ```
   - **Q5. What are the assumptions you made?**
   
-    Assumed the LocalStack service is healthy, and the message contains necessary fields with specific name;
-    Assumed the each message info size is limited, hence it will be suitable to transit between Airflow tasks.
-    Assumed the version format follows sematic versioning, hence it will fits the implemented conversion method.
+    1. Assumed the LocalStack service is healthy, and the message contains necessary fields with specific name;
+    2. Assumed the each message info size is limited, hence it will be suitable to transit between Airflow tasks.
+    3. Assumed the version format follows sematic versioning, hence it will fits the implemented conversion method.
     
