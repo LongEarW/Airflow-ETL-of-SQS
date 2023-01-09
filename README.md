@@ -55,34 +55,3 @@ docker compose ps
 In the Airflow dashboard (http://localhost:8080/), check `Grid` and `Calendar` for overview of runs' status, and check log for detialed process.
 
 <img src="./Grid.png" width="200">
-
-## Answer to Questions
-  - **Q1. How would you deploy this application in production?**
- 
-    Launch Airflow workers on multi-node cluster (Kubernetes cluster) to surpport scale. Also, switch interaction with LocalStack to AWS.
-
-  - **Q2. What other components would you want to add to make this production ready?**
-    1. Additional handling for extracting no message from SQS (current implementation can handle the case, but not elegantly).
-    2. Rebuilt the Airflow Worker image (current image doesn't include all the requires modules, they are installed at docker compose step, which is not suitable for production enviroment).
-    3. Add alarm notification for task failures.
-
-  - **Q3. How can this application scale with a growing dataset.**
- 
-    If the SQS has high throughput, ETL may increase workflow frequency, limit the number of message for each consumption, increase number of work nodes and transfer the database from Postgres to distributed cluster (Hadoop, Redis).
-
-  - **Q4. How can PII be recovered later on?**
- 
-    Given that the ETL encrypt the PII through ECB and base64, the user can recover the PII through reversed process:
-    ```
-    def decypt_text(en_text):
-        aes = AES.new(FETCH_TOKEN.encode("utf8"), AES.MODE_ECB)
-        base64_decrypted = base64.decodebytes(en_text.encode(encoding='utf-8'))
-        decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\f', '')
-        return decrypted_text
-    ```
-  - **Q5. What are the assumptions you made?**
-  
-    1. Assumed the LocalStack service is healthy, and the message contains necessary fields with specific name;
-    2. Assumed the each message info size is limited, hence it will be suitable to transit between Airflow tasks.
-    3. Assumed the version format follows sematic versioning, hence it will fits the implemented conversion method.
-    
